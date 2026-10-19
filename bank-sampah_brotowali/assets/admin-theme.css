@@ -1,0 +1,370 @@
+/* =========================================================
+   TEMA ADMIN BANK SAMPAH — zamrud & emas
+   Dimuat SETELAH <style> tiap halaman, jadi menimpa gaya lama.
+========================================================= */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@1,600;1,700&display=swap');
+
+:root {
+    --bg: #04140e;
+    --panel: #0a2a1e;
+    --panel-2: #0d3324;
+    --gold: #e6b84a;
+    --gold-2: #f7dc86;
+    --gold-line: rgba(230, 184, 74, .55);
+    --red: #7a1414;
+    --red-2: #b32424;
+    --text: #f3ecd4;
+    --muted: #a7b9a8;
+    --ok: #1fae5c;
+    --warn: #e0a526;
+    --bad: #d24545;
+    --side-w: 270px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: 'Inter', system-ui, sans-serif !important;
+    color: var(--text) !important;
+    background:
+        radial-gradient(circle at 85% 0%, rgba(230, 184, 74, .08), transparent 32%),
+        radial-gradient(circle at 0% 100%, rgba(31, 174, 92, .10), transparent 35%),
+        var(--bg) !important;
+}
+
+/* ---------- bingkai emas dua garis (dipakai berulang) ---------- */
+.bs-frame,
+.stat-card, .table-card, .page-head, .modal-box, .account-card, .form-card, .card, .panel {
+    border: 1px solid var(--gold-line) !important;
+    box-shadow: inset 0 0 0 3px rgba(4, 20, 14, .92), inset 0 0 0 4px rgba(230, 184, 74, .22), 0 8px 22px rgba(0, 0, 0, .35) !important;
+    border-radius: 14px !important;
+}
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+.sidebar.bs-side {
+    position: fixed !important;
+    inset: 0 auto 0 0 !important;
+    width: var(--side-w) !important;
+    height: 100vh !important;
+    padding: 18px 14px 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    background: linear-gradient(180deg, #06231a 0%, #04170f 100%) !important;
+    border-right: 1px solid var(--gold-line) !important;
+    z-index: 60;
+    overflow: hidden;
+}
+
+.bs-brand { display: flex; align-items: center; gap: 12px; padding: 4px 8px 18px; }
+.bs-brand-icon {
+    width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center;
+    font-size: 26px; color: #06231a;
+    background: linear-gradient(135deg, var(--gold-2), var(--gold));
+    box-shadow: 0 0 16px rgba(230, 184, 74, .35);
+}
+.bs-brand h2 { margin: 0; font-size: 18px; letter-spacing: .5px; white-space: nowrap; color: var(--gold-2); font-weight: 800; }
+.bs-brand p { margin: 2px 0 0; font-size: 10.5px; color: var(--muted); white-space: nowrap; }
+
+.bs-menu { display: flex; flex-direction: column; gap: 4px; overflow-y: auto; flex: 1 1 auto; min-height: 0; padding-bottom: 8px; }
+.bs-menu a {
+    display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 10px;
+    color: var(--text); text-decoration: none; font-size: 14.5px; font-weight: 500;
+    border: 1px solid transparent; transition: .18s;
+}
+.bs-menu a:hover { background: rgba(230, 184, 74, .08); border-color: rgba(230, 184, 74, .25); }
+.bs-menu a.active {
+    color: #fff; font-weight: 700;
+    background: linear-gradient(90deg, #0f6b3c, #0a4a2b);
+    border-color: var(--gold); box-shadow: 0 0 14px rgba(230, 184, 74, .25);
+}
+.bs-mi { width: 24px; text-align: center; font-size: 18px; }
+
+.bs-side-bottom { flex: 0 0 auto; margin: 0 -14px; padding: 12px 14px 0; border-top: 1px solid rgba(230, 184, 74, .25); }
+.bs-side-user { display: flex; align-items: center; gap: 10px; padding: 4px 4px 8px; }
+.bs-side-user strong { display: block; font-size: 14px; color: var(--gold-2); }
+.bs-side-user small { color: var(--muted); font-size: 12px; }
+.bs-avatar {
+    width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; font-size: 18px;
+    background: #0a2a1e; border: 2px solid var(--gold); flex: 0 0 auto;
+}
+.bs-logout {
+    display: block; text-align: center; padding: 8px; border-radius: 9px; font-size: 13px;
+    color: #ffd0d0; text-decoration: none; border: 1px solid rgba(210, 69, 69, .5); background: rgba(122, 20, 20, .35);
+}
+.bs-logout:hover { background: rgba(179, 36, 36, .5); }
+.bs-side-deco {
+    margin: 12px -14px 0; height: 116px; position: relative;
+    background: linear-gradient(0deg, rgba(4, 20, 14, 0) 55%, #04170f 100%), url('deco-kiri.jpg') center bottom / cover;
+    display: flex; align-items: flex-start; padding: 12px 18px;
+}
+.bs-side-deco span {
+    font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-weight: 700;
+    color: var(--gold-2); font-size: 15px; line-height: 1.35; text-shadow: 0 2px 6px #000;
+}
+
+/* =========================================================
+   AREA UTAMA + TOPBAR
+========================================================= */
+body .main { margin-left: var(--side-w) !important; min-height: 100vh; transition: margin .2s; }
+
+.topbar.bs-top {
+    height: 74px !important; padding: 0 26px !important; gap: 16px;
+    display: flex !important; align-items: center !important; justify-content: flex-start !important;
+    background: rgba(4, 23, 15, .92) !important;
+    border-bottom: 1px solid var(--gold-line) !important;
+    position: sticky; top: 0; z-index: 50; backdrop-filter: blur(6px);
+}
+.bs-burger {
+    display: none; width: 40px; height: 40px; border-radius: 10px; font-size: 20px; cursor: pointer;
+    color: var(--gold-2); background: var(--panel); border: 1px solid var(--gold-line);
+}
+.bs-top-title { flex: 1 1 auto; min-width: 0; }
+.bs-top-title h3 { margin: 0; font-size: 19px; font-weight: 800; color: var(--gold-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bs-top-title p { margin: 2px 0 0; font-size: 12.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.bs-search {
+    display: flex; align-items: center; gap: 8px; width: min(320px, 28vw); height: 42px; padding: 0 14px;
+    border-radius: 999px; background: #062418; border: 1px solid var(--gold-line);
+}
+.bs-search input { flex: 1; min-width: 0; background: transparent; border: 0; outline: 0; color: var(--text); font-size: 14px; }
+.bs-search input::placeholder { color: var(--muted); }
+
+.bs-bell, .bs-me { position: relative; }
+.bs-bell summary, .bs-me summary { list-style: none; cursor: pointer; }
+.bs-bell summary::-webkit-details-marker, .bs-me summary::-webkit-details-marker { display: none; }
+.bs-bell summary {
+    position: relative; width: 42px; height: 42px; display: grid; place-items: center; font-size: 20px;
+    border-radius: 50%; background: #062418; border: 1px solid var(--gold-line);
+}
+.bs-bell summary b {
+    position: absolute; top: -5px; right: -5px; min-width: 20px; height: 20px; padding: 0 5px; border-radius: 999px;
+    background: #d32f2f; color: #fff; font-size: 11px; display: grid; place-items: center; border: 2px solid var(--bg);
+}
+.bs-me summary {
+    display: flex; align-items: center; gap: 10px; padding: 4px 14px 4px 5px; border-radius: 999px;
+    background: #062418; border: 1px solid var(--gold-line);
+}
+.bs-me-name { font-size: 13.5px; font-weight: 700; line-height: 1.15; }
+.bs-me-name small { display: block; font-weight: 400; color: var(--muted); font-size: 11.5px; }
+.bs-pop {
+    position: absolute; right: 0; top: calc(100% + 8px); min-width: 210px; padding: 8px; z-index: 80;
+    display: flex; flex-direction: column; gap: 2px; background: #062418; border: 1px solid var(--gold-line);
+    border-radius: 12px; box-shadow: 0 14px 30px rgba(0, 0, 0, .5);
+}
+.bs-pop strong { padding: 6px 10px; font-size: 12px; color: var(--gold-2); }
+.bs-pop a { display: flex; justify-content: space-between; padding: 9px 10px; border-radius: 8px; color: var(--text); text-decoration: none; font-size: 13.5px; }
+.bs-pop a:hover { background: rgba(230, 184, 74, .12); }
+.bs-pop em { font-style: normal; font-weight: 700; color: var(--gold-2); }
+
+body .content { padding: 26px !important; }
+
+.bs-overlay { display: none; }
+
+/* =========================================================
+   GAYA UMUM UNTUK HALAMAN ADMIN LAMA
+========================================================= */
+.stat-card, .table-card, .page-head { background: linear-gradient(160deg, var(--panel-2), var(--panel)) !important; }
+.modal-box { background: linear-gradient(160deg, #0d3324, #082419) !important; }
+
+h1, h2, .page-head h1, .page-head h2, .table-head h3, .modal-head h3 { color: var(--gold-2); }
+.stat-number, .stat-card strong { color: var(--gold-2) !important; }
+.stat-label, .page-description, .breadcrumb { color: var(--muted) !important; }
+
+table { border-collapse: collapse; }
+table th {
+    color: var(--gold-2) !important; font-weight: 700 !important; font-size: 12.5px;
+    background: rgba(230, 184, 74, .08) !important; border-bottom: 1px solid var(--gold-line) !important;
+}
+table td { border-bottom: 1px solid rgba(230, 184, 74, .13) !important; }
+table tbody tr:hover { background: rgba(230, 184, 74, .06) !important; }
+
+.btn-primary, .btn-save, .btn-search, button[type="submit"].btn {
+    background: linear-gradient(180deg, var(--gold-2), var(--gold)) !important; color: #2a1c02 !important;
+    border: 1px solid #b98a1c !important; font-weight: 700 !important; border-radius: 10px !important;
+}
+.btn-primary:hover, .btn-save:hover, .btn-search:hover { filter: brightness(1.08); }
+.btn-delete { background: linear-gradient(180deg, var(--red-2), var(--red)) !important; color: #fff !important; border: 1px solid #ff8a8a55 !important; }
+
+.form-control, .search-input, input[type="text"], input[type="number"], input[type="password"],
+input[type="date"], input[type="search"], select, textarea {
+    background: #062418; color: var(--text); border: 1px solid rgba(230, 184, 74, .35); border-radius: 10px;
+}
+.form-control:focus, .search-input:focus, input:focus, select:focus, textarea:focus {
+    outline: 0; border-color: var(--gold) !important; box-shadow: 0 0 0 3px rgba(230, 184, 74, .18);
+}
+
+/* =========================================================
+   DASHBOARD (kelas berawalan bs-)
+========================================================= */
+.bs-grid { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 20px; align-items: start; }
+.bs-col { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; min-width: 0; }
+
+.bs-panel {
+    border-radius: 14px; padding: 16px;
+    background: linear-gradient(160deg, var(--panel-2), var(--panel));
+    border: 1px solid var(--gold-line);
+    box-shadow: inset 0 0 0 3px rgba(4, 20, 14, .92), inset 0 0 0 4px rgba(230, 184, 74, .22), 0 8px 22px rgba(0, 0, 0, .35);
+}
+.bs-panel h4 { margin: 0 0 12px; font-size: 16px; color: var(--gold-2); display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.bs-panel h4 a { font-size: 12px; font-weight: 600; color: var(--gold); text-decoration: none; }
+
+/* Hero */
+.bs-hero {
+    position: relative; overflow: hidden; min-height: 236px; padding: 26px 30px; border-radius: 16px;
+    border: 1px solid var(--gold);
+    box-shadow: inset 0 0 0 3px rgba(4, 20, 14, .92), inset 0 0 0 4px rgba(230, 184, 74, .3), 0 10px 26px rgba(0, 0, 0, .4);
+    background:
+        linear-gradient(90deg, #12100a 0%, #2a0b0b 42%, rgba(42, 11, 11, .35) 66%, rgba(0, 0, 0, 0) 100%),
+        url('hero-art.jpg') right center / auto 100% no-repeat, #2a0b0b;
+}
+.bs-hero small { color: var(--gold); letter-spacing: 2px; font-size: 11.5px; font-weight: 700; }
+.bs-hero h1 { margin: 6px 0 0; font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 46px; line-height: 1.05; color: #fff; text-shadow: 0 3px 12px #000; }
+.bs-hero h1 span { color: var(--gold-2); }
+.bs-hero p { margin: 10px 0 16px; max-width: 420px; color: #f0e3c8; font-size: 14px; line-height: 1.5; }
+.bs-hero-tags { display: flex; gap: 16px; flex-wrap: wrap; }
+.bs-hero-tags div { display: flex; align-items: center; gap: 8px; font-size: 12px; line-height: 1.2; color: #f3ecd4; }
+.bs-hero-tags i {
+    width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; font-style: normal; font-size: 18px;
+    border: 1.5px solid var(--gold); background: rgba(0, 0, 0, .35);
+}
+.bs-hero-chip {
+    display: inline-block; margin-top: 14px; padding: 6px 12px; border-radius: 999px; font-size: 12.5px; font-weight: 700;
+    color: #2a1c02; background: linear-gradient(180deg, var(--gold-2), var(--gold)); text-decoration: none;
+}
+
+/* Kartu statistik */
+.bs-stats { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+.bs-stat { padding: 13px 10px; display: flex; gap: 9px; align-items: flex-start; min-width: 0; }
+.bs-stat.merah { background: linear-gradient(160deg, #5a1010, #2f0808); }
+.bs-stat-ico {
+    width: 36px; height: 36px; flex: 0 0 auto; border-radius: 50%; display: grid; place-items: center; font-size: 17px;
+    background: rgba(230, 184, 74, .14); border: 1.5px solid var(--gold);
+}
+.bs-stat span { display: block; font-size: 11.5px; color: var(--muted); }
+.bs-stat > div:last-child { min-width: 0; }
+.bs-stat b { display: block; font-size: clamp(15px, 1.2vw, 19px); line-height: 1.3; color: #fff; font-weight: 800; white-space: nowrap; }
+.bs-stat em { font-style: normal; font-size: 10.5px; font-weight: 600; line-height: 1.25; display: block; }
+.naik { color: #4be08a; } .turun { color: #ff7a7a; } .datar { color: var(--muted); }
+.bs-stat small { display: block; margin-top: 2px; font-size: 10.5px; color: var(--muted); }
+
+/* Grafik + tabel */
+.bs-two { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.4fr); gap: 16px; }
+.bs-chart-box { position: relative; height: 240px; }
+.bs-table-wrap { overflow-x: auto; }
+.bs-table { width: 100%; font-size: 12px; }
+.bs-table th { padding: 8px 5px; text-align: left; white-space: nowrap; }
+.bs-table td { padding: 8px 5px; vertical-align: middle; }
+.bs-table .nw { white-space: nowrap; }
+.bs-badge { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; color: #fff; }
+.bs-badge.ok { background: #14893f; } .bs-badge.wait { background: #a9770a; } .bs-badge.no { background: #a52a2a; }
+.bs-empty { padding: 30px 10px; text-align: center; color: var(--muted); }
+
+/* Aksi cepat */
+.bs-actions { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.bs-act { display: flex; align-items: center; gap: 12px; padding: 14px; text-decoration: none; color: var(--text); transition: .18s; }
+.bs-act:hover { transform: translateY(-2px); filter: brightness(1.12); }
+.bs-act i {
+    width: 42px; height: 42px; flex: 0 0 auto; border-radius: 12px; display: grid; place-items: center; font-style: normal; font-size: 21px;
+    background: linear-gradient(160deg, #fff7dc, #e7d29a); box-shadow: 0 3px 8px rgba(0, 0, 0, .4);
+}
+.bs-act b { display: block; font-size: 13px; color: #fff; }
+.bs-act small { color: var(--muted); font-size: 11.5px; }
+
+/* Kolom kanan */
+.bs-saldo { text-align: center; }
+.bs-saldo .lbl { display: flex; justify-content: center; align-items: center; gap: 10px; font-size: 14px; }
+.bs-saldo .coin { font-size: 34px; }
+.bs-saldo .nilai { font-size: 32px; font-weight: 800; color: var(--gold-2); margin: 6px 0 12px; }
+.bs-btn-gold {
+    display: block; padding: 10px; border-radius: 999px; font-weight: 800; text-decoration: none; text-align: center;
+    color: #2a1c02; background: linear-gradient(180deg, var(--gold-2), var(--gold)); border: 1px solid #b98a1c;
+}
+.bs-promo {
+    min-height: 118px; padding: 16px; border-radius: 14px; border: 1px solid var(--gold-line);
+    display: flex; align-items: center;
+    background: linear-gradient(90deg, rgba(74, 10, 10, .96) 30%, rgba(74, 10, 10, .2)), url('deco-kanan.jpg') right center / cover;
+}
+.bs-promo span { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-weight: 700; font-size: 18px; line-height: 1.3; color: var(--gold-2); max-width: 160px; }
+.bs-mini { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.bs-mini div { padding: 10px; border-radius: 12px; background: rgba(0, 0, 0, .22); border: 1px solid rgba(230, 184, 74, .3); }
+.bs-mini span { display: block; font-size: 11px; color: var(--muted); }
+.bs-mini b { font-size: 15px; color: #fff; }
+.bs-top5 { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.bs-top5 li { display: flex; align-items: center; gap: 10px; font-size: 13px; }
+.bs-rank {
+    width: 26px; height: 26px; flex: 0 0 auto; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 800;
+    color: var(--gold-2); border: 1.5px solid var(--gold); background: #062418;
+}
+.bs-top5 li:first-child .bs-rank { background: linear-gradient(180deg, var(--gold-2), var(--gold)); color: #2a1c02; }
+.bs-top5 .nm { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bs-top5 .kg { font-weight: 700; color: var(--gold-2); }
+
+/* Ticker */
+.bs-ticker { grid-column: 1 / -1; overflow: hidden; max-width: 100%; min-width: 0; padding: 11px 0; border-radius: 999px; }
+.bs-grid > * { min-width: 0; }
+.bs-ticker-run { display: inline-block; white-space: nowrap; padding-left: 100%; animation: bsjalan 32s linear infinite; font-size: 13px; }
+.bs-ticker-run i { font-style: normal; color: var(--gold); margin: 0 26px; }
+@keyframes bsjalan { to { transform: translateX(-100%); } }
+
+/* =========================================================
+   RESPONSIF
+========================================================= */
+@media (max-width: 1280px) {
+    .bs-grid { grid-template-columns: minmax(0, 1fr); }
+    .bs-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .bs-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 980px) {
+    .bs-two { grid-template-columns: minmax(0, 1fr); }
+    .bs-search { display: none; }
+}
+@media (max-width: 900px) {
+    body .main { margin-left: 0 !important; }
+    .sidebar.bs-side { transform: translateX(-105%); transition: transform .25s; }
+    body.menu-terbuka .sidebar.bs-side { transform: none; }
+    body.menu-terbuka .bs-overlay { display: block; position: fixed; inset: 0; background: rgba(0, 0, 0, .6); z-index: 55; }
+    .bs-burger { display: grid; place-items: center; }
+    .bs-me-name { display: none; }
+}
+@media (min-width: 901px) {
+    body.menu-tutup .sidebar.bs-side { transform: translateX(-105%); }
+    body.menu-tutup .main { margin-left: 0 !important; }
+    .bs-burger { display: grid; place-items: center; }
+}
+@media (max-width: 600px) {
+    body .content { padding: 16px !important; }
+    .bs-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .bs-hero h1 { font-size: 34px; }
+    .bs-hero { background-position: 75% center; }
+}
+@media print {
+    .sidebar.bs-side, .bs-top, .bs-overlay { display: none !important; }
+    body .main { margin-left: 0 !important; }
+}
+
+/* halaman lama yang memakai <main> polos (mis. verifikasi_pembelian) */
+.content > main { width: 100% !important; max-width: none !important; margin: 0 !important; padding: 0 !important; }
+
+/* halaman lama berlatar putih: detail_nasabah & edit_transaksi */
+.content .container { color: var(--text); }
+.content .container > h2, .content .header h2, .content .section h2 { color: var(--gold-2); }
+.content .container, .content .header, .content .section, .content .cards .card {
+    background: linear-gradient(160deg, var(--panel-2), var(--panel)) !important;
+    border: 1px solid var(--gold-line); border-radius: 14px;
+    box-shadow: inset 0 0 0 3px rgba(4, 20, 14, .92), inset 0 0 0 4px rgba(230, 184, 74, .22);
+    color: var(--text);
+}
+.content .container > .header, .content .container > .section { margin-bottom: 18px; }
+.content .card h3 { color: var(--muted) !important; }
+.content .nominal, .content .saldo { color: var(--gold-2) !important; }
+.content .info { color: var(--text); }
+.content .container .info { background: rgba(0, 0, 0, .25) !important; }
+.content .container table { background: transparent !important; }
+.content .container th { color: var(--gold-2) !important; background: rgba(230, 184, 74, .08) !important; }
+.content .container td { color: var(--text); border-color: rgba(230, 184, 74, .15) !important; }
+.content .container label { color: var(--muted); }
+.content .container select, .content .container input { background: #062418 !important; color: var(--text) !important; }
+.content .container button { background: linear-gradient(180deg, var(--gold-2), var(--gold)) !important; color: #2a1c02 !important; font-weight: 700; }
+.content .container .batal, .content .container .kembali { background: #3b4a42 !important; color: #fff !important; }

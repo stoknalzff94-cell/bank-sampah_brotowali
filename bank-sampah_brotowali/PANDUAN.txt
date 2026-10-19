@@ -1,0 +1,23 @@
+PANDUAN PASANG BANK SAMPAH (XAMPP)
+
+1. Nyalakan Apache dan MySQL di XAMPP.
+2. Extract folder ini ke C:\xampp\htdocs\ sebagai folder BARU
+   (jangan di atas folder lama).
+3. Buka  http://localhost/bank-sampah_semangka/install.php
+   Isi nama, username, dan password admin, lalu klik "Pasang sekarang".
+   File install.php akan terhapus otomatis setelah berhasil.
+4. Login sebagai admin di  http://localhost/bank-sampah_semangka/
+5. Buka menu "Kelola Akun" untuk membuat akun guru, siswa, dan pengepul.
+   (Data nasabah dibuat dulu di menu Nasabah, lalu akun siswa/guru
+    dihubungkan ke nasabah itu.)
+
+ALUR KERJA
+- Siswa/guru menyetor sampah  -> admin verifikasi (Verifikasi Transaksi)
+- Admin menambah jenis sampah -> admin verifikasi (Verifikasi Sampah)
+- Pengepul mengajukan pembelian -> admin verifikasi (Verifikasi Pembelian)
+- Stok pengepul = setoran yang disetujui - pembelian pending/disetujui
+
+CATATAN
+- Kalau sudah punya database lama (banksampah_ataya), install.php tidak
+  menghapus data yang ada.
+- Jika dipasang di hosting, ganti password database di koneksi.php.
